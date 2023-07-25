@@ -215,11 +215,65 @@ On Nextcloud inside the _OpenProject Integration_ App, when adding the OpenProje
   ```
   In case the `curl` command above results in an error pay attention what it is telling you. Typical reasons for connection issues are misconfigured firewalls, proxies, or a bad TLS/SSL setup.
 
-##### While using a self signed TLS/SSL certificate you receive "certificate verify failed"
+##### While using a self-signed TLS/SSL certificate you receive "certificate verify failed"
 
-Some administrators setup OpenProject using a self signed TLS/SSL certificate with their own CA (certificate authority). That CA needs to be known on the Nextcloud server. On a Debian/Ubuntu based server, make sure you add the CA certificate for your OpenProject certificate to `/usr/local/share/ca-certificates` and run `sudo update-ca-certificates` afterwards. Then Nextcloud's PHP code should be able to verify your OpenProject TLS/SSL certificate when emitting HTTPS requests to your Nextcloud server.
+Some administrators setup OpenProject using a self-signed TLS/SSL certificate with their own CA (certificate authority). That CA needs to be known on the Nextcloud server. On a Debian/Ubuntu based server, make sure you add the CA certificate for your OpenProject certificate to `/usr/local/share/ca-certificates` and run `sudo update-ca-certificates` afterwards. Then Nextcloud's PHP code should be able to verify your OpenProject TLS/SSL certificate when emitting HTTPS requests to your Nextcloud server.
 
 Attention: Please do not confuse the CA for the Nextcloud server's certificate with the CA of the OpenProject server's certificate which you might have provided in the OpenProject installation wizard. They do not necessarily need to be the same.
+
+#### While setting up Project folders
+
+While setting up the project folders we create a new user, group and group folder named `OpenProject`. At the time of set up the system expects either all of these entities to have been set up with proper permissions or none of them to be present. If one or more of these entities are present without required permissions an error message will be displayed in the screen.
+
+##### Error message "The user "OpenProject" already exists"
+
+On Nextcloud inside the _OpenProject Integration_ App, when setting up OpenProject user, group and folder , it shows the error **"The user "OpenProject" already exists"**. This error occurs if user `OpenProject` exists but group `OpenProject` and/or group folder `OpenProject` doesn't exists, or they exist with broken permissions. To solve this problem refer to possible solutions in section [Possible solutions to Project folders setup error](#possible-solutions-to-project-folders-setup-error)
+
+##### Error message "The group "OpenProject" already exists"
+
+On Nextcloud inside the _OpenProject Integration_ App, when setting up OpenProject user, group and folder , it shows the error **"The group "OpenProject" already exists"**. This can occur if group or group folder `OpenProject` exists but the user `OpenProject` doesn't exist. To solve this problem refer to possible solutions in section [Possible solutions to Project folders setup error](#possible-solutions-to-project-folders-setup-error)
+
+##### Error message "The group folder name "OpenProject" already exists"
+
+On Nextcloud inside the _OpenProject Integration_ App, when setting up OpenProject user, group and folder, it shows the error **"The group folder name "OpenProject" already exists"**. This can occur if both group and user `OpenProject` doesn't exist but the group folder `OpenProject` doesn't exist. To solve this problem refer to possible solutions in section [Possible solutions to Project folders setup error](#possible-solutions-to-project-folders-setup-error)
+
+##### Possible solutions to Project folders setup error
+
+If you are facing any of the aforementioned errors while trying to set up the `Project folders` feature for the first time, or you don't care about the `OpenProject` user/group/folder data then the most easy solution is to remove any of the created `OpenProject` user/group/folder. Please follow the following steps:
+
+- Disable the _OpenProject Integration_ App
+- Remove user `OpenProject`
+- Remove group `OpenProject`
+- Inside the _Group folders_ App (*Administration settings → Administration → Group folders*), remove group folder `OpenProject`
+- Enable the _OpenProject Integration_ App
+- Set up the project folders
+
+> Note: You need to disable the _OpenProject Integration_ App because user/group `OpenProject` is protected by the app, and it won't allow you to delete the user/group named "OpenProject". Disabling and enabling the app is safe. No app data will be deleted.
+
+If you do care about the `OpenProject` user/group/folder data then the conditions that bring the project folder setup to error state, and its possible solutions are as listed below: 
+
+- User `OpenProject` doesn't exist. Please check if the user exists, if not create a user named `OpenProject` with username and display name `OpenProject`, some secure random password, email is not necessary.
+- Group `OpenProject` doesn't exist. Please check if the group exists, if not create a group named `OpenProject`.
+- User `OpenProject` is not a member of group `OpenProject`. Please check the user is member of the group, if not add the user `OpenProject` to the group `OpenProject`.
+- User `OpenProject` is not group admin of group `OpenProject`. Please check the user is admin of the group, if not make user `OpenProject` the group admin of group `OpenProject`
+- Group folder `OpenProject` doesn't exist. If you don't have the _Group folders_ App installed, please install and enable it. Inside the _Group folders_ App (*Administration settings → Administration → Group folders*) make a group folder named `OpenProject`. Add the group `OpenProject` to the group folder with all the permissions i.e. Write, Share, Delete. Add user `OpenProject` to advance permissions list.
+- Group folder `OpenProject` is not assigned to group "OpenProject". Inside the _Group folders_ App (*Administration settings → Administration → Group folders*) check if the "OpenProject" group folder has group "OpenProject" assigned to it, if not add the group "OpenProject" with all the permissions i.e. Write, Share, Delete.
+- Group `OpenProject` doesn't have all the permissions for group folder `OpenProject`. Inside the _Group folders_ App (*Administration settings → Administration → Group folders*) check if the group "OpenProject" has all the permissions for group folder "OpenProject", if not give group "OpenProject" all the permissions i.e. Write, Share, Delete.
+- User `OpenProject` doesn't have advanced permissions for group folder `OpenProject`.  Inside the _Group folders_ App (*Administration settings → Administration → Group folders*) check if the user "OpenProject" has advanced permissions for group folder "OpenProject", if not add user "OpenProject" to advanced permissions list.
+
+> Note: The name `OpenProject` is case-sensitive, so should be in exact that format.
+
+#### While trying to delete or disable user/group "OpenProject"
+
+If you face an error while trying to delete or disable user/group "OpenProject" then that's because user/group is protected by _OpenProject Integration_ App. If you really need to delete the user or group follow following steps:
+
+1. Disable the _OpenProject Integration_ App
+2. Remove user `OpenProject`
+3. Remove group `OpenProject`
+4. Inside the _Group folders_ App (*Administration settings → Administration → Group folders*), remove group folder `OpenProject`
+5. Enable the _OpenProject Integration_ App
+
+> Note: Disabling and enabling the app is safe. No app data will be deleted.
 
 ### Setting up Nextcloud in OpenProject
 
@@ -241,9 +295,9 @@ On OpenProject inside the storage administration (*Administration → File stora
   ```
   If you do not get such a response check out what the `curl` command above is telling you. Typical reasons for connection issues are misconfigured firewalls, proxies, or a bad TLS/SSL setup.
 
-##### While using a self signed TLS/SSL certificate you receive "certificate verify failed"
+##### While using a self-signed TLS/SSL certificate you receive "certificate verify failed"
 
-Some administrators setup Nextcloud using a self signed TLS/SSL certificate with their own CA (certificate authority). The CA needs to be known on the OpenProject server. On a Debian/Ubuntu based server, make sure you add the CA certificate for your Nextcloud certificate to `/usr/local/share/ca-certificates` and run `sudo update-ca-certificates` afterwards. Then OpenProject's Ruby code should be able to verify your Nextcloud TLS/SSL certificate when emitting HTTPS requests to your Nextcloud server.
+Some administrators setup Nextcloud using a self-signed TLS/SSL certificate with their own CA (certificate authority). The CA needs to be known on the OpenProject server. On a Debian/Ubuntu based server, make sure you add the CA certificate for your Nextcloud certificate to `/usr/local/share/ca-certificates` and run `sudo update-ca-certificates` afterwards. Then OpenProject's Ruby code should be able to verify your Nextcloud TLS/SSL certificate when emitting HTTPS requests to your Nextcloud server.
 
 Attention: Please do not confuse the CA for the Nextcloud server's certificate with the CA of the OpenProject server's certificate which you might have provided in the OpenProject installation wizard. They do not necessarily need to be the same.
 
@@ -266,4 +320,4 @@ The integration OpenProject with Nextcloud makes use of authorized HTTP requests
 
 ## Getting support
 
-If you run into any new issues or you cannot solve your integration please use our [Support Installation & Updates forum](https://community.openproject.org/projects/openproject/forums/9) or if you have an Enterprise subscription, please contact us at Enterprise Support.
+If you run into any new issues, or you cannot solve your integration please use our [Support Installation & Updates forum](https://community.openproject.org/projects/openproject/forums/9) or if you have an Enterprise subscription, please contact us at Enterprise Support.
