@@ -223,7 +223,7 @@ Attention: Please do not confuse the CA for the Nextcloud server's certificate w
 
 #### While setting up Project folders
 
-While setting up the project folders we create a new user, group and group folder named `OpenProject`. At the time of set up the system expects either all of these entities to have been set up with proper permissions or none of them to be present. If one or more of these entities are present without required permissions an error message will be displayed on the screen.
+While setting up the project folders we create a new user, group and group folder named `OpenProject`. At the time of set up the system expects either all of these entities to have been set up with proper permissions or none of them to be present. If one or more of these entities are present without required permissions, an error message will be displayed.
 
 ##### Error message "The user "OpenProject" already exists"
 
@@ -246,9 +246,9 @@ If you are facing any of the aforementioned errors while trying to set up the `P
 - Remove group `OpenProject`
 - Inside the _Group folders_ App (*Administration settings → Administration → Group folders*), remove group folder `OpenProject`
 - Enable the _OpenProject Integration_ App
-- Set up the project folders
+- Set up the project folders again
 
-> Note: You need to disable the _OpenProject Integration_ App because user/group `OpenProject` is protected by the app, and it won't allow you to delete the user/group named "OpenProject". Disabling and enabling the app is safe. No app data will be deleted.
+> Note: You need to disable the _OpenProject Integration_ App because user/group `OpenProject` is protected by the app, and it won't allow you to delete the user/group named `OpenProject`. Disabling and enabling the app is safe. No app data will be deleted.
 
 If you do care about the `OpenProject` user/group/folder data then the conditions that bring the project folder setup to error state, and its possible solutions are as listed below: 
 
@@ -257,9 +257,9 @@ If you do care about the `OpenProject` user/group/folder data then the condition
 - User `OpenProject` is not a member of group `OpenProject`. Please check the user is a member of the group, if not add the user `OpenProject` to the group `OpenProject`.
 - User `OpenProject` is not group admin of group `OpenProject`. Please check the user is admin of the group, if not make user `OpenProject` the group admin of group `OpenProject`
 - Group folder `OpenProject` doesn't exist. If you don't have the _Group folders_ App installed, please install and enable it. Inside the _Group folders_ App (*Administration settings → Administration → Group folders*) make a group folder named `OpenProject`. Add the group `OpenProject` to the group folder with all the permissions i.e. Write, Share, Delete. Add user `OpenProject` to advance permissions list.
-- Group folder `OpenProject` is not assigned to group "OpenProject". Inside the _Group folders_ App (*Administration settings → Administration → Group folders*) check if the "OpenProject" group folder has group "OpenProject" assigned to it, if not add the group "OpenProject" with all the permissions i.e. Write, Share, Delete.
-- Group `OpenProject` doesn't have all the permissions for group folder `OpenProject`. Inside the _Group folders_ App (*Administration settings → Administration → Group folders*) check if the group "OpenProject" has all the permissions for group folder "OpenProject", if not give group "OpenProject" all the permissions i.e. Write, Share, Delete.
-- User `OpenProject` doesn't have advanced permissions for group folder `OpenProject`.  Inside the _Group folders_ App (*Administration settings → Administration → Group folders*) check if the user "OpenProject" has advanced permissions for group folder "OpenProject", if not add user "OpenProject" to advanced permissions list.
+- Group folder `OpenProject` is not assigned to group `OpenProject`. Inside the _Group folders_ App (*Administration settings → Administration → Group folders*) check if the `OpenProject` group folder has group `OpenProject` assigned to it, if not add the group `OpenProject` with all the permissions i.e. Write, Share, Delete.
+- Group `OpenProject` doesn't have all the permissions for group folder `OpenProject`. Inside the _Group folders_ App (*Administration settings → Administration → Group folders*) check if the group `OpenProject` has all the permissions for group folder `OpenProject`, if not give group `OpenProject` all the permissions i.e. Write, Share, Delete.
+- User `OpenProject` doesn't have advanced permissions for group folder `OpenProject`.  Inside the _Group folders_ App (*Administration settings → Administration → Group folders*) check if the user `OpenProject` has advanced permissions for group folder `OpenProject`, if not add user `OpenProject` to advanced permissions list.
 
 > Note: The name `OpenProject` is case-sensitive, so should be in exactly that format.
 
